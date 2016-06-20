@@ -1,0 +1,22 @@
+{
+  "name": "react-native-invoke",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wix/react-native-invoke.git"
+  },
+  "version": "0.1.0",
+  "description": "Invoke any native code directly from Javascript in React Native",
+  "nativePackage": true,
+  "bugs": {
+    "url": "https://github.com/wix/react-native-invoke/issues"
+  },
+  "homepage": "https://github.com/wix/react-native-invoke",
+  "main": "index.js",
+  "author": "Tal Kol <talkol@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+  }
+}
