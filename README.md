@@ -116,10 +116,9 @@ Prepare a call for later execution.
 Returns (in later execution) the native view backing the React component ref.<br>Example:
 ```js
 <ScrollView refreshControl={<RefreshControl refreshing={true} ref='refresh'/>} />
-
 const _rctRefreshControl = Invoke.React.view(this.refs['refresh']);
 ```
-
+<br>
 ##### > `Invoke.IOS.CGPoint({x, y})`
 
 Returns (in later execution) an iOS point.
