@@ -1,7 +1,7 @@
 # React Native Invoke
 
 Invoke any native code directly from Javascript in React Native (without wrapping it first with a native manager)
-
+<br><br>
 ## Install
 
 #### iOS
@@ -100,7 +100,12 @@ const {x, y, width, height} = await Invoke.execute(_getCaretRect);
 ## Full example project
 
 Available [here](example), open the `/example` folder, run `npm install` and then open `/example/ios/example.xcodeproj` in Xcode.
+
+* [Example of getting the scroll offset of a ScrollView](example/scroll-offset-example.js)
+* [Example of getting, changing and setting the frame of RefreshControl](example/refresh-control-pos-example.js)
+* [Example of getting the cursor pos from a TextInput](example/text-cursor-pos-example.js)
 <br><br>
+
 ## API
 
 ##### > `Invoke.execute(invocation)`
