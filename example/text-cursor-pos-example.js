@@ -34,8 +34,8 @@ export default class TextCursorPosExample extends Component {
     );
   }
   async onButtonPress() {
-    // id textView = [componentView valueForKey:@'_textView'];
-    // CGRect result = [textView caretRectForPosition:textView.selectedTextRange.start];
+    //ObjC:  id textView = [componentView valueForKey:@'_textView'];
+    //ObjC:  CGRect result = [textView caretRectForPosition:textView.selectedTextRange.start];
     const _rctTextInput = Invoke.React.view(this.refs['input']);
     const _getTextView = Invoke.call(_rctTextInput, 'valueForKey:', '_textView');
     const _getSelectedTextRange = Invoke.call(_getTextView, 'selectedTextRange');
