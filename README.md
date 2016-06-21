@@ -17,7 +17,7 @@ Invoke any native code directly from Javascript in React Native
 #### Android
 
 Coming soon
-
+<br><br>
 ## Executing calls to native
 
 ```js
@@ -36,7 +36,7 @@ const {x, y} = await Invoke.execute(_getContentOffset);
 ```
 
 > Only simple serializable objects can pass between native and JS. Since many methods take a complex object as argument, we support making multiple calls in one execution so the result of one call can be passed to the next one without going through JS.
-
+<br><br>
 ## Example invocations
 
 ###### 1. from Objective-C
@@ -95,21 +95,21 @@ const _getStartPosition = Invoke.call(_getSelectedTextRange, 'start');
 const _getCaretRect = Invoke.call(_getTextView, 'caretRectForPosition:', _getStartPosition);
 const {x, y, width, height} = await Invoke.execute(_getCaretRect);
 ```
-
+<br>
 ## Full example project
 
 Available [here](example), open the `/example` folder, run `npm install` and then open `/example/ios/example.xcodeproj` in Xcode.
-
+<br><br>
 ## API
 
 ##### > `Invoke.execute(invocation)`
 
 Send the entire invocation to native and execute it. Code runs in native only when we reach this command. Returns a promise.
-
+<br><br>
 ##### > `Invoke.call(target, methodSignature, arg1, arg2, ...)`
 
 Prepare a call for later execution.
-
+<br><br>
 ##### > `Invoke.React.view(componentRef)`
 
 Returns (in later execution) the native view backing the React component ref.<br>Example:
@@ -118,15 +118,15 @@ Returns (in later execution) the native view backing the React component ref.<br
 
 const _rctRefreshControl = Invoke.React.view(this.refs['refresh']);
 ```
-
+<br>
 ##### > `Invoke.IOS.CGPoint({x, y})`
 
 Returns (in later execution) an iOS point.
-
+<br><br>
 ##### > `Invoke.IOS.CGRect({x, y, width, height})`
 
 Returns (in later execution) an iOS rect.
-
+<br><br>
 ## License
 
 MIT
