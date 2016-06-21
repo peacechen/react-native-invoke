@@ -1,6 +1,6 @@
 # React Native Invoke
 
-Invoke any native code directly from Javascript in React Native
+Invoke any native code directly from Javascript in React Native (without wrapping it first with a native manager)
 
 ## Install
 
