@@ -5,8 +5,7 @@ import {
   View,
   Image,
   TextInput,
-  TouchableOpacity,
-  findNodeHandle
+  TouchableOpacity
 } from 'react-native';
 import Invoke from 'react-native-invoke';
 

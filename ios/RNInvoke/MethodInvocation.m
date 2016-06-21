@@ -50,6 +50,21 @@ static RCTBridge *_bridge;
         if (![value isKindOfClass:[NSString class]]) return nil;
         return value;
     }
+    if ([type isEqualToString:@"NSNumber"])
+    {
+        if (![value isKindOfClass:[NSNumber class]]) return nil;
+        return value;
+    }
+    if ([type isEqualToString:@"CGRect"])
+    {
+        if (![value isKindOfClass:[NSDictionary class]]) return nil;
+        NSDictionary *v = (NSDictionary*)value;
+        CGFloat x = [[value objectForKey:@"x"] floatValue];
+        CGFloat y = [[value objectForKey:@"y"] floatValue];
+        CGFloat width = [[value objectForKey:@"width"] floatValue];
+        CGFloat height = [[value objectForKey:@"height"] floatValue];
+        return [NSValue valueWithCGRect:CGRectMake(x, y, width, height)];
+    }
     if ([type isEqualToString:@"Invocation"])
     {
         if (![value isKindOfClass:[NSDictionary class]]) return nil;
@@ -89,6 +104,8 @@ static RCTBridge *_bridge;
 + (id) getReturnValue:(NSInvocation*)invocation withType:(id)param
 {
     id res = nil;
+    NSString *retType = [NSString stringWithUTF8String:invocation.methodSignature.methodReturnType];
+    if ([retType isEqualToString:@"v"]) return nil;
     if (param == nil)
     {
         id __unsafe_unretained tempResultSet;
@@ -149,6 +166,16 @@ static RCTBridge *_bridge;
     return value;
 }
 
++ (void) invocation:(NSInvocation*)invocation setNonPointerArg:(NSDictionary*)arg withValue:(NSValue*)value atIndex:(NSInteger)idx
+{
+    NSString *type = [arg objectForKey:@"type"];
+    if ([type isEqualToString:@"CGRect"])
+    {
+        CGRect v = [value CGRectValue];
+        [invocation setArgument:&v atIndex:idx];
+    }
+}
+
 + (id) invoke:(NSDictionary*)params withBridge:(RCTBridge*)bridge onError:(void (^)(NSString*))onError
 {
     _bridge = bridge;
@@ -191,7 +218,14 @@ static RCTBridge *_bridge;
             onError([NSString stringWithFormat:@"invalid arg value %d", i]);
             return nil;
         }
-        [invocation setArgument:&argValue atIndex:i + 2];
+        if (![argValue isKindOfClass:[NSValue class]])
+        {
+            [invocation setArgument:&argValue atIndex:i + 2];
+        }
+        else
+        {
+            [MethodInvocation invocation:invocation setNonPointerArg:arg withValue:argValue atIndex:i + 2];
+        }
     }
     [invocation invoke];
     return [MethodInvocation getReturnValue:invocation withType:[params objectForKey:@"returns"]];

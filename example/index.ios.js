@@ -9,6 +9,7 @@ import { AppRegistry,
 
 import ScrollOffsetExample from './scroll-offset-example';
 import TextCursorPosExample from './text-cursor-pos-example';
+import RefreshControlPosExample from './refresh-control-pos-example';
 
 class example extends Component {
   constructor(props) {
@@ -36,6 +37,12 @@ class example extends Component {
         <TouchableOpacity onPress={() => this.setState({example: TextCursorPosExample})}>
           <Text style={{color: 'blue', fontSize: 17, marginBottom: 20}}>
             Get TextInput Cursor Position
+          </Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={() => this.setState({example: RefreshControlPosExample})}>
+          <Text style={{color: 'blue', fontSize: 17, marginBottom: 20}}>
+            RefreshControl Component Position
           </Text>
         </TouchableOpacity>
 

@@ -39,6 +39,7 @@ RCT_EXPORT_METHOD(execute:(NSDictionary *)invocation
         rejected = YES;
         reject(@"invoke_error", details, nil);
     }];
+    if (rejected) return;
     resolve(result);
 }
 
