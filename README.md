@@ -37,6 +37,7 @@ const {x, y} = await Invoke.execute(_getContentOffset);
 
 > Only simple serializable objects can pass between native and JS. Since many methods take a complex object as argument, we support making multiple calls in one execution so the result of one call can be passed to the next one without going through JS.
 <br><br>
+
 ## Example invocations
 
 ###### 1. from Objective-C
@@ -118,7 +119,7 @@ Returns (in later execution) the native view backing the React component ref.<br
 
 const _rctRefreshControl = Invoke.React.view(this.refs['refresh']);
 ```
-<br>
+
 ##### > `Invoke.IOS.CGPoint({x, y})`
 
 Returns (in later execution) an iOS point.
