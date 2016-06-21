@@ -34,11 +34,12 @@ export default class ScrollOffsetExample extends Component {
     );
   }
   async onButtonPress() {
+    // CGPoint result = [componentView.scrollView contentOffset];
     const _getScrollView = Invoke.call(Invoke.React.view(this.refs['scroll']), 'scrollView');
     const _getOffset = Invoke.call(_getScrollView, 'contentOffset').returns(Invoke.IOS.CGPoint);
     const {x, y} = await Invoke.execute(_getOffset);
     this.setState({
-      value: y
+      value: `${Math.round(y)}`
     });
   }
 }

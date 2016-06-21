@@ -10,6 +10,14 @@ function call(target, method, ...args) {
       if (typeof returnType === 'function') {
         returnType = returnType();
       }
+      for (let i = 0; i<args.length; i++) {
+        if (typeof args[i].returns === 'function') {
+          args[i] = {
+            type: 'Invocation',
+            value: args[i].returns()
+          };
+        }
+      }
       return {
         target: target,
         method: method,

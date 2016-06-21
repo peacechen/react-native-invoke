@@ -8,6 +8,7 @@ import { AppRegistry,
 } from 'react-native';
 
 import ScrollOffsetExample from './scroll-offset-example';
+import TextCursorPosExample from './text-cursor-pos-example';
 
 class example extends Component {
   constructor(props) {
@@ -29,6 +30,12 @@ class example extends Component {
         <TouchableOpacity onPress={() => this.setState({example: ScrollOffsetExample})}>
           <Text style={{color: 'blue', fontSize: 17, marginBottom: 20}}>
             Get ScrollView Offset
+          </Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={() => this.setState({example: TextCursorPosExample})}>
+          <Text style={{color: 'blue', fontSize: 17, marginBottom: 20}}>
+            Get TextInput Cursor Position
           </Text>
         </TouchableOpacity>
 

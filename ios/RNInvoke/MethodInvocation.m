@@ -68,6 +68,14 @@ static RCTBridge *_bridge;
         id value = [p objectForKey:@"value"];
         return [MethodInvocation getValue:value withType:type onError:onError];
     }
+    if ([param isKindOfClass:[NSString class]])
+    {
+        return param;
+    }
+    if ([param isKindOfClass:[NSNumber class]])
+    {
+        return param;
+    }
     return nil;
 }
 
@@ -100,6 +108,10 @@ static RCTBridge *_bridge;
     {
         res = [NSValue valueWithCGPoint:*(CGPoint*)buffer];
     }
+    if ([type isEqualToString:@"CGRect"])
+    {
+        res = [NSValue valueWithCGRect:*(CGRect*)buffer];
+    }
     
     free(buffer);
     return res;
@@ -127,6 +139,11 @@ static RCTBridge *_bridge;
         {
             CGPoint p = [value CGPointValue];
             return @{@"x": @(p.x), @"y": @(p.y)};
+        }
+        if ([type isEqualToString:@"CGRect"])
+        {
+            CGRect r = [value CGRectValue];
+            return @{@"x": @(r.origin.x), @"y": @(r.origin.y), @"width": @(r.size.width), @"height": @(r.size.height)};
         }
     }
     return value;

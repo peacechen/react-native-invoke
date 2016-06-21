@@ -5,6 +5,14 @@ var CGPoint = function (value) {
   };
 };
 
+var CGRect = function (value) {
+  return {
+    type: 'CGRect',
+    value: value
+  };
+};
+
 module.exports = {
-  CGPoint: CGPoint
+  CGPoint: CGPoint,
+  CGRect: CGRect
 };
