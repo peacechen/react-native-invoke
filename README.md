@@ -105,7 +105,7 @@ Available [here](example), open the `/example` folder, run `npm install` and the
 
 ##### > `Invoke.execute(invocation)`
 
-Send the entire invocation to native and execute it. Code runs in native only when we reach this command. Returns a promise.
+Send the entire invocation to native and execute it. Code runs in native only when we reach this command. Returns a promise with the final return value (make sure it's serializable).
 <br><br>
 ##### > `Invoke.call(target, methodSignature, arg1, arg2, ...)`
 
