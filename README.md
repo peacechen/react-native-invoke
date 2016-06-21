@@ -127,6 +127,13 @@ Returns (in later execution) an iOS point.
 
 Returns (in later execution) an iOS rect.
 <br><br>
+## Notes
+
+* The final return value from native arrives as the promise result of `Invoke.execute`. It has to be serializable! If you have return values that aren't serializable (like complex objects), you probably need to have several `Invoke.call`s and pass them between eachother.
+
+* All native code is executed on the main thread.
+
+<br>
 ## License
 
 MIT
