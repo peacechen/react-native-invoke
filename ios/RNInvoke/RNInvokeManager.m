@@ -29,18 +29,15 @@ RCT_EXPORT_METHOD(execute:(NSDictionary *)invocation
     __block BOOL rejected = NO;
     id result = [MethodInvocation invoke:invocation withBridge:self.bridge onError:^(NSString *details)
     {
-        if (rejected) return;
+        if (!rejected) reject(@"invoke_error", details, nil);
         rejected = YES;
-        reject(@"invoke_error", details, nil);
     }];
-    result = [MethodInvocation serializeValue:result withType:[invocation objectForKey:@"returns"] onError:^(NSString *details)
+    result = [MethodInvocation serializeValue:result onError:^(NSString *details)
     {
-        if (rejected) return;
+        if (!rejected) reject(@"invoke_error", details, nil);
         rejected = YES;
-        reject(@"invoke_error", details, nil);
     }];
-    if (rejected) return;
-    resolve(result);
+    if (!rejected) resolve(result);
 }
 
 @end

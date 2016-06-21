@@ -2,8 +2,8 @@ var RNInvokeManager = require('react-native').NativeModules.RNInvokeManager;
 var Invoke = require('./src/Invoke.js');
 
 function execute(invocation) {
-  if (typeof invocation.returns === 'function') {
-    invocation = invocation.returns();
+  if (typeof invocation === 'function') {
+    invocation = invocation();
   }
   return RNInvokeManager.execute(invocation);
 }

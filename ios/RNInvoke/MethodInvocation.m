@@ -101,63 +101,46 @@ static RCTBridge *_bridge;
     return nil;
 }
 
-+ (id) getReturnValue:(NSInvocation*)invocation withType:(id)param
++ (id) getReturnValue:(NSInvocation*)invocation
 {
     id res = nil;
-    NSString *retType = [NSString stringWithUTF8String:invocation.methodSignature.methodReturnType];
-    if ([retType isEqualToString:@"v"]) return nil;
-    if (param == nil)
+    NSString *type = [NSString stringWithUTF8String:invocation.methodSignature.methodReturnType];
+    if ([type isEqualToString:@"v"]) return nil;
+    if ([type isEqualToString:@"@"])
     {
         id __unsafe_unretained tempResultSet;
         [invocation getReturnValue:&tempResultSet];
         res = tempResultSet;
         return res;
     }
-    
     NSUInteger length = [[invocation methodSignature] methodReturnLength];
     void *buffer = (void *)malloc(length);
     [invocation getReturnValue:buffer];
-    
-    if (![param isKindOfClass:[NSDictionary class]]) return nil;
-    NSDictionary *p = (NSDictionary*)param;
-    NSString *type = [param objectForKey:@"type"];
-    if ([type isEqualToString:@"CGPoint"])
+    if ([type isEqualToString:@"{CGPoint=dd}"])
     {
         res = [NSValue valueWithCGPoint:*(CGPoint*)buffer];
     }
-    if ([type isEqualToString:@"CGRect"])
+    if ([type isEqualToString:@"{CGRect={CGPoint=dd}{CGSize=dd}}"])
     {
         res = [NSValue valueWithCGRect:*(CGRect*)buffer];
     }
-    
     free(buffer);
     return res;
 }
 
-+ (id) serializeValue:(id)value withType:(id)param onError:(void (^)(NSString*))onError
++ (id) serializeValue:(id)value onError:(void (^)(NSString*))onError
 {
     if (value == nil) return nil;
-    if (param == nil) return value;
-    if (![param isKindOfClass:[NSDictionary class]])
-    {
-        onError(@"invalid type when serializing value");
-        return nil;
-    }
-    NSString *type = [param objectForKey:@"type"];
-    if (type == nil)
-    {
-        onError(@"type missing when serializing value");
-        return nil;
-    }
     if ([value isKindOfClass:[NSValue class]])
     {
         NSValue *v = (NSValue*)value;
-        if ([type isEqualToString:@"CGPoint"])
+        NSString *type = [NSString stringWithUTF8String:v.objCType];
+        if ([type isEqualToString:@"{CGPoint=dd}"])
         {
             CGPoint p = [value CGPointValue];
             return @{@"x": @(p.x), @"y": @(p.y)};
         }
-        if ([type isEqualToString:@"CGRect"])
+        if ([type isEqualToString:@"{CGRect={CGPoint=dd}{CGSize=dd}}"])
         {
             CGRect r = [value CGRectValue];
             return @{@"x": @(r.origin.x), @"y": @(r.origin.y), @"width": @(r.size.width), @"height": @(r.size.height)};
@@ -166,10 +149,15 @@ static RCTBridge *_bridge;
     return value;
 }
 
-+ (void) invocation:(NSInvocation*)invocation setNonPointerArg:(NSDictionary*)arg withValue:(NSValue*)value atIndex:(NSInteger)idx
++ (void) invocation:(NSInvocation*)invocation setNonPointerArg:(NSValue*)value atIndex:(NSInteger)idx
 {
-    NSString *type = [arg objectForKey:@"type"];
-    if ([type isEqualToString:@"CGRect"])
+    NSString *type = [NSString stringWithUTF8String:value.objCType];
+    if ([type isEqualToString:@"{CGPoint=dd}"])
+    {
+        CGPoint v = [value CGPointValue];
+        [invocation setArgument:&v atIndex:idx];
+    }
+    if ([type isEqualToString:@"{CGRect={CGPoint=dd}{CGSize=dd}}"])
     {
         CGRect v = [value CGRectValue];
         [invocation setArgument:&v atIndex:idx];
@@ -224,11 +212,11 @@ static RCTBridge *_bridge;
         }
         else
         {
-            [MethodInvocation invocation:invocation setNonPointerArg:arg withValue:argValue atIndex:i + 2];
+            [MethodInvocation invocation:invocation setNonPointerArg:argValue atIndex:i + 2];
         }
     }
     [invocation invoke];
-    return [MethodInvocation getReturnValue:invocation withType:[params objectForKey:@"returns"]];
+    return [MethodInvocation getReturnValue:invocation];
 }
 
 @end

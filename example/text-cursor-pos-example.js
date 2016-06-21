@@ -36,10 +36,11 @@ export default class TextCursorPosExample extends Component {
   async onButtonPress() {
     // id textView = [componentView valueForKey:@'_textView'];
     // CGRect result = [textView caretRectForPosition:textView.selectedTextRange.start];
-    const _getTextView = Invoke.call(Invoke.React.view(this.refs['input']), 'valueForKey:', '_textView');
+    const _rctTextInput = Invoke.React.view(this.refs['input']);
+    const _getTextView = Invoke.call(_rctTextInput, 'valueForKey:', '_textView');
     const _getSelectedTextRange = Invoke.call(_getTextView, 'selectedTextRange');
     const _getStartPosition = Invoke.call(_getSelectedTextRange, 'start');
-    const _getCaretRect = Invoke.call(_getTextView, 'caretRectForPosition:', _getStartPosition).returns(Invoke.IOS.CGRect);
+    const _getCaretRect = Invoke.call(_getTextView, 'caretRectForPosition:', _getStartPosition);
     const {x, y, width, height} = await Invoke.execute(_getCaretRect);
     this.setState({
       value: `(${Math.round(x)},${Math.round(y)})`

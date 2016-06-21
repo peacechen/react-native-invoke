@@ -12,6 +12,6 @@
 @interface MethodInvocation : NSObject
 
 + (id) invoke:(NSDictionary*)params withBridge:(RCTBridge*)bridge onError:(void (^)(NSString*))onError;
-+ (id) serializeValue:(id)value withType:(id)type onError:(void (^)(NSString*))onError;
++ (id) serializeValue:(id)value onError:(void (^)(NSString*))onError;
 
 @end

@@ -28,10 +28,11 @@ export default class RefreshControlPosExample extends Component {
     );
   }
   async onButtonPress() {
-    const _getRefreshFrame = Invoke.call(Invoke.React.view(this.refs['refresh']), 'frame').returns(Invoke.IOS.CGRect);
+    const _rctRefreshControl = Invoke.React.view(this.refs['refresh']);
+    const _getRefreshFrame = Invoke.call(_rctRefreshControl, 'frame');
     let {x, y, width, height} = await Invoke.execute(_getRefreshFrame);
     y += 10;
-    const _setRefreshFrame = Invoke.call(Invoke.React.view(this.refs['refresh']), 'setFrame:', Invoke.IOS.CGRect({x, y, width, height}));
+    const _setRefreshFrame = Invoke.call(_rctRefreshControl, 'setFrame:', Invoke.IOS.CGRect({x, y, width, height}));
     await Invoke.execute(_setRefreshFrame);
   }
 }

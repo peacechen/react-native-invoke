@@ -1,31 +1,25 @@
 function call(target, method, ...args) {
-  return {
-    returns: function (returnType) {
-      if (typeof target.returns === 'function') {
-        target = {
-          type: 'Invocation',
-          value: target.returns()
-        };
-      }
-      if (typeof returnType === 'function') {
-        returnType = returnType();
-      }
-      for (let i = 0; i<args.length; i++) {
-        if (typeof args[i].returns === 'function') {
-          args[i] = {
-            type: 'Invocation',
-            value: args[i].returns()
-          };
-        }
-      }
-      return {
-        target: target,
-        method: method,
-        args: args,
-        returns: returnType
+  return function () {
+    if (typeof target === 'function') {
+      target = {
+        type: 'Invocation',
+        value: target()
       };
     }
-  };
+    for (let i = 0; i<args.length; i++) {
+      if (typeof args[i] === 'function') {
+        args[i] = {
+          type: 'Invocation',
+          value: args[i]()
+        };
+      }
+    }
+    return {
+      target: target,
+      method: method,
+      args: args
+    };
+  }
 }
 
 module.exports = {
