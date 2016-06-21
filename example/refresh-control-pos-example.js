@@ -33,7 +33,7 @@ export default class RefreshControlPosExample extends Component {
     const _getRefreshFrame = Invoke.call(_rctRefreshControl, 'frame');
     let {x, y, width, height} = await Invoke.execute(_getRefreshFrame);
     y += 10;
-    //ObjC:  [componentView setFrame:frame]
+    //ObjC:  [componentView setFrame:frame];
     const _setRefreshFrame = Invoke.call(_rctRefreshControl, 'setFrame:', Invoke.IOS.CGRect({x, y, width, height}));
     await Invoke.execute(_setRefreshFrame);
   }
