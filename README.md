@@ -1,6 +1,6 @@
 # React Native Invoke
 
-Invoke any native code directly from Javascript in React Native (without wrapping it first with a native manager)
+Invoke any native code directly from Javascript in React Native (without wrapping it first with a native manager). Gives you full access from JS to all native API of iOS (and Android soon).
 <br><br>
 ## Install
 
