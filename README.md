@@ -20,13 +20,17 @@ Coming soon
 <br><br>
 ## Executing calls to native
 
+> Notice that this is regular Javascript code. It has full access to all native API in iOS and there's no RN native manager involved wrapping each individual API call.
+
 ```js
+import Invoke from 'react-native-invoke';
+
 // execute a single call
 const _getContentOffset = Invoke.call(_scrollView, 'contentOffset');
 const {x, y} = await Invoke.execute(_getContentOffset);
 ```
 
-> Invoke.execute returns a promise and only when it runs code is actaully being run in native.
+> Invoke.execute returns a promise. The native code doesn't actually execute until Invoke.execute runs.
 
 ```js
 // execute multiple calls
