@@ -8,7 +8,13 @@
  */
 
 #import "AppDelegate.h"
+#if __has_include(<React/RCTRootView.h>)
+// React Native >= 0.40
+#import <React/RCTRootView.h>
+#else
+// React Native <= 0.39
 #import "RCTRootView.h"
+#endif
 
 @implementation AppDelegate
 

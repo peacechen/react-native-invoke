@@ -10,8 +10,15 @@
 #import <UIKit/UIKit.h>
 #import <XCTest/XCTest.h>
 
-#import "RCTLog.h"
+#if __has_include(<React/RCTRootView.h>)
+// React Native >= 0.40
+#import <React/RCTRootView.h>
+#import <React/RCTLog.h>
+#else
+// React Native <= 0.39
 #import "RCTRootView.h"
+#import "RCTLog.h"
+#endif
 
 #define TIMEOUT_SECONDS 600
 #define TEXT_TO_LOOK_FOR @"Welcome to React Native!"

@@ -7,7 +7,13 @@
 //
 
 #import "MethodInvocation.h"
+#if __has_include(<React/RCTUIManager.h>)
+// React Native >= 0.40
+#import <React/RCTUIManager.h>
+#else
+// React Native <= 0.39
 #import "RCTUIManager.h"
+#endif
 
 static RCTBridge *_bridge;
 
@@ -167,7 +173,7 @@ static RCTBridge *_bridge;
 + (id) invoke:(NSDictionary*)params withBridge:(RCTBridge*)bridge onError:(void (^)(NSString*))onError
 {
     _bridge = bridge;
-    
+
     id target = [MethodInvocation getTarget:[params objectForKey:@"target"] onError:onError];
     if (target == nil)
     {

@@ -7,7 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
+#if __has_include(<React/RCTBridge.h>)
+// React Native >= 0.40
+#import <React/RCTBridge.h>
+#else
+// React Native <= 0.39
 #import "RCTBridge.h"
+#endif
 
 @interface MethodInvocation : NSObject
 
